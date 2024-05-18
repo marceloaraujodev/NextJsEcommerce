@@ -103,7 +103,7 @@ export default function CartPage() {
         localStorage.setItem('cart', [])
       }
     }
-  }, [success])
+  }, [success, clearCart])
 
   function addOneMoreProduct(id) {
     addProduct(id);
