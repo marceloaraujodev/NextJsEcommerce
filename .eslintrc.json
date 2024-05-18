@@ -11,3 +11,5 @@
 //     "@next/next/no-img-element": "off"
 //   }
 // }
+
+// npm i eslint-config-next instead ob babel
