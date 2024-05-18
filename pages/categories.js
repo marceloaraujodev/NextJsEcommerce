@@ -34,7 +34,7 @@ const ItemBox = styled.a`
   }
 `;
 
-export default function categories() {
+export default function Categories() {
   return (
     <>
     <Layout>

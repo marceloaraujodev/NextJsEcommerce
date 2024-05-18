@@ -66,7 +66,7 @@ const SuccessTitle = styled.h1`
   font-size: 2.5;
 `;
 
-export default function cartPage() {
+export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart} =
     useContext(CartContext);
   const [products, setProducts] = useState([]);

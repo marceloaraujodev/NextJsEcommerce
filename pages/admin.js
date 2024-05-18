@@ -3,7 +3,7 @@ import CenterVertically from '@/components/CenterVertically'
 import Layout from '@/components/Layout'
 import React from 'react'
 
-export default function admin() {
+export default function Admin() {
   return (
     <Layout>
       <CenterVertically>

@@ -1,3 +1,4 @@
+import React from 'react';
 import Center from '@/components/Center';
 import Layout from '@/components/Layout';
 import styled from 'styled-components';
@@ -5,7 +6,7 @@ import Button from '@/components/Button';
 import CenterVertically from '@/components/CenterVertically';
 
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+
 
 const Container = styled.div`
   background-color: #ccc;
@@ -77,8 +78,7 @@ const ProductInfoBox = styled.div`
 
 // pull actuall data from orders! data is not synced yet
 
-export default function account() {
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+export default function Account() {
   const { data: session } = useSession();
 
   console.log(session)

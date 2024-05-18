@@ -5,7 +5,7 @@ import Title from '@/components/Title';
 import { mongooseConnectShared } from './../shared/mongooseShared';
 import Product from '@/models/Product';
 
-export default function products({ products }) {
+export default function Products({ products }) {
   return (
     <>
       <Layout>
