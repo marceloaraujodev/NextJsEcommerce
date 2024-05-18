@@ -5,11 +5,4 @@
   }
 }
 
-// {
-//   "extends": ["next/babel","next/core-web-vitals"],
-//   "rules": {
-//     "@next/next/no-img-element": "off"
-//   }
-// }
-
 // npm i eslint-config-next instead ob babel
