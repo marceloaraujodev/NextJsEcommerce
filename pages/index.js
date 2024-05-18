@@ -6,6 +6,7 @@ import NewProducts from '@/components/NewProducts';
 import Layout from '@/components/Layout';
 import Promos from '@/components/Promos';
 import Featured2 from '@/components/Featured2';
+console.log('test')
 
 export default function HomePage({ featuredProduct, newProducts }) {
   // console.log('this is new p', newProducts)
