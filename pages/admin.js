@@ -7,7 +7,7 @@ export default function Admin() {
   return (
     <Layout>
       <CenterVertically>
-        <ButtonLink $black href='http://localhost:3000'>Login to Admin</ButtonLink>
+        <ButtonLink $black href='https://next-js-ecommerce-admin-tawny.vercel.app/'>Login to Admin</ButtonLink>
       </CenterVertically>
     </Layout>
   )
