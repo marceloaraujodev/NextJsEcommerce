@@ -81,9 +81,6 @@ const ProductInfoBox = styled.div`
 export default function Account() {
   const { data: session } = useSession();
 
-  console.log(session)
-
-
   return (
     <>
       {!session && (
