@@ -35,4 +35,6 @@ export async function getServerSideProps() {
       newProducts: JSON.parse(JSON.stringify(newProducts)),
     },
   };
-}
+};
+
+
