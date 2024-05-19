@@ -81,7 +81,15 @@ export default function CartPage() {
   const router = useRouter();
   // checks the url for success so it can clear cart
   const {success} = router.query;
+  // console.log(success)
 
+useEffect(() => {
+  // if(products?.length > 0){
+  //   console.log('items should load below cart')
+  // }
+  // console.log(cartProducts)
+  // console.log(products?.length)
+}, [products])
 
   useEffect(() => {
     if (cartProducts.length > 0) {
