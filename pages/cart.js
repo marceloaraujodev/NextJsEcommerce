@@ -82,14 +82,6 @@ export default function CartPage() {
   // checks the url for success so it can clear cart
   const {success} = router.query;
 
-// useEffect(() => {
-//   // if(products?.length > 0){
-//   //   console.log('items should load below cart')
-//   // }
-//   // console.log(cartProducts)
-//   // console.log(products?.length)
-// }, [products])
-
   useEffect(() => {
     if (cartProducts.length > 0) {
       axios.post('/api/cart', { ids: cartProducts }).then((response) => {
@@ -110,7 +102,7 @@ export default function CartPage() {
         localStorage.setItem('cart', [])
       }
     }
-  }, [success])
+  }, [success, clearCart])
 
   function addOneMoreProduct(id) {
     addProduct(id);
@@ -277,3 +269,7 @@ export default function CartPage() {
     </>
   );
 }
+
+// export async function getServerSideProps(){
+//   const response = 
+// }
