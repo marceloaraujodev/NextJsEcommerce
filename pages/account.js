@@ -7,7 +7,6 @@ import CenterVertically from '@/components/CenterVertically';
 
 import { useSession, signIn, signOut } from 'next-auth/react';
 
-
 const Container = styled.div`
   background-color: #ccc;
   display: flex;
