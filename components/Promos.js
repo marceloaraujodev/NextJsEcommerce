@@ -107,6 +107,11 @@ const Gridbox3LeftSpan = styled.span`
 const Gridbox3Right = styled.div`
   overflow: hidden;
   height: 100%;
+  
+  img{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
 `;
 
 export default function Promos() {

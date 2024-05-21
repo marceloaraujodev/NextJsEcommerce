@@ -66,6 +66,8 @@ const SuccessTitle = styled.h1`
   font-size: 2.5;
 `;
 
+
+
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart} =
     useContext(CartContext);
@@ -77,6 +79,7 @@ export default function CartPage() {
   const [zipcode, setZipcode] = useState('');
   const [country, setCountry] = useState('');
 
+  // console.log('preloadInfo:', preloadInfo)
 
   const router = useRouter();
   // checks the url for success so it can clear cart
@@ -84,6 +87,7 @@ export default function CartPage() {
 
   useEffect(() => {
     if (cartProducts.length > 0) {
+      // sends ids to server to get the info
       axios.post('/api/cart', { ids: cartProducts }).then((response) => {
         setProducts(response.data);
         // console.log(response.data);
@@ -270,6 +274,3 @@ export default function CartPage() {
   );
 }
 
-// export async function getServerSideProps(){
-//   const response = 
-// }

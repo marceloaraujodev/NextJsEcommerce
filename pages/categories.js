@@ -6,8 +6,10 @@ const CategoriesContainer = styled.div`
   /* border: 1px solid black; */
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
   align-items: center;
-  margin-top: 80px;
+  margin: 80px 0
 `;
 
 const ItemBox = styled.a`
@@ -39,7 +41,7 @@ export default function Categories() {
     <>
     <Layout>
     <Center>
-      <div>categories</div>
+      
       <CategoriesContainer>
         <ItemBox>WATCHES
         <img src='/watches.png' alt='' />
