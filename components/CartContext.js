@@ -1,10 +1,14 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
 export const CartContext = createContext({});
 
 export default function CartContextProvider({children}) {
   const ls = typeof window  !== "undefined" ? window.localStorage : null; 
-  const [cartProducts, setCartProducts] = useState([]) 
+  // array of ids
+  const [cartProducts, setCartProducts] = useState([]);
+  // array of the product objects
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     if(cartProducts?.length > 0){
@@ -19,8 +23,19 @@ export default function CartContextProvider({children}) {
     }
   }, [ls]);
 
-  function addProduct(productId){
-    setCartProducts(prev => [...prev, productId])
+  // useEffect(() => {
+  //     const preLoad = async () => {
+  //       const res = await axios.post('/api/cart', { ids: cartProducts })
+  //       setCartProducts(res.data)
+  //       console.log(res.data)
+  //     }
+  //     // preLoad();
+  // }, [products])
+
+  async function addProduct(productId){
+    setCartProducts(prev => [...prev, productId]);
+    const res = await axios.post('/api/cart', { ids: productId })
+    setProducts(res.data)
   }
 
   function removeProduct (productId){
@@ -43,7 +58,15 @@ export default function CartContextProvider({children}) {
 
   return (
     <CartContext.Provider 
-      value={{cartProducts, clearCart, addProduct, removeProduct, setCartProducts}}
+      value={{
+        cartProducts, 
+        clearCart, 
+        addProduct, 
+        removeProduct, 
+        setCartProducts,
+        products,
+        setProducts
+      }}
     >{children}</CartContext.Provider>
   )
 }

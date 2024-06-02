@@ -14,7 +14,7 @@ const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
-  margin-top: 40px;
+  margin: 40px 0;
   @media screen and (min-width: 768px){
     gap: 40px;
     grid-template-columns: 0.8fr 1.2fr;
@@ -69,9 +69,9 @@ const SuccessTitle = styled.h1`
 
 
 export default function CartPage() {
-  const { cartProducts, addProduct, removeProduct, clearCart} =
+  const { cartProducts, addProduct, removeProduct, clearCart, products, setProducts} =
     useContext(CartContext);
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
@@ -86,17 +86,14 @@ export default function CartPage() {
   const {success} = router.query;
 
   useEffect(() => {
-    if (cartProducts.length > 0) {
-      // sends ids to server to get the info
-      axios.post('/api/cart', { ids: cartProducts }).then((response) => {
-        setProducts(response.data);
-        // console.log(response.data);
-      });
-    } else {
+    if (cartProducts.length < 1) 
       // clears cart after last item is deleted
       setProducts([]);
-    }
   }, [cartProducts]);
+
+  useEffect(() => {
+
+  }, [cartProducts])
 
   // Clears local storage cart after the purchase
   useEffect(() => {

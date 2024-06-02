@@ -67,6 +67,8 @@ const ButtonText = styled.span`
 
 `;
 
+// try to do a api call to get product info before user gets to cartPage! Get the product and set state to reflect the cart item
+
 export default function ProductBox({ _id, price, title, description, images }) {
 
   const {addProduct} = useContext(CartContext);
