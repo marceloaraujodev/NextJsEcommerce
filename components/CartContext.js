@@ -5,9 +5,7 @@ export const CartContext = createContext({});
 
 export default function CartContextProvider({children}) {
   const ls = typeof window  !== "undefined" ? window.localStorage : null; 
-  // array of ids
   const [cartProducts, setCartProducts] = useState([]);
-  // array of the product objects
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -23,19 +21,25 @@ export default function CartContextProvider({children}) {
     }
   }, [ls]);
 
-  // useEffect(() => {
-  //     const preLoad = async () => {
-  //       const res = await axios.post('/api/cart', { ids: cartProducts })
-  //       setCartProducts(res.data)
-  //       console.log(res.data)
-  //     }
-  //     // preLoad();
-  // }, [products])
+  // gets items right as they are added instead of only geting when you are on cartpage
+  useEffect(() => {
+    if (cartProducts.length > 0) {
+      // sends ids to server to get the info
+      axios.post('/api/cart', { ids: cartProducts }).then((response) => {
+        setProducts(response.data);
+        // console.log(response.data);
+      });
+    } else {
+      // clears cart after last item is deleted
+      setProducts([]);
+    }
+  }, [cartProducts]);
 
   async function addProduct(productId){
     setCartProducts(prev => [...prev, productId]);
-    const res = await axios.post('/api/cart', { ids: productId })
-    setProducts(res.data)
+
+    // const res = await axios.post('/api/cart', {ids: productId})
+    // setProducts(prev => [...prev, ...res.data])
   }
 
   function removeProduct (productId){
@@ -49,7 +53,12 @@ export default function CartContextProvider({children}) {
         return updatedCart;
       }
       return prev;
-    })
+    });
+    // console.log(productId)
+    // setProducts(prev => {
+    //  return prev.filter(p => p._id !== productId)
+    // })
+    // console.log(products.filter(p => p._id == productId))
   }
 
   function clearCart(){
@@ -58,15 +67,7 @@ export default function CartContextProvider({children}) {
 
   return (
     <CartContext.Provider 
-      value={{
-        cartProducts, 
-        clearCart, 
-        addProduct, 
-        removeProduct, 
-        setCartProducts,
-        products,
-        setProducts
-      }}
+      value={{cartProducts, clearCart, addProduct, removeProduct, setCartProducts, products, setProducts}}
     >{children}</CartContext.Provider>
   )
 }

@@ -69,7 +69,7 @@ const SuccessTitle = styled.h1`
 
 
 export default function CartPage() {
-  const { cartProducts, addProduct, removeProduct, clearCart, products, setProducts} =
+  const { cartProducts, addProduct, removeProduct, clearCart, products} =
     useContext(CartContext);
   // const [products, setProducts] = useState([]);
   const [name, setName] = useState('');
@@ -79,21 +79,24 @@ export default function CartPage() {
   const [zipcode, setZipcode] = useState('');
   const [country, setCountry] = useState('');
 
-  // console.log('preloadInfo:', preloadInfo)
+  // console.log('preloadInfo:', preloadInfo)zz
 
   const router = useRouter();
   // checks the url for success so it can clear cart
   const {success} = router.query;
 
-  useEffect(() => {
-    if (cartProducts.length < 1) 
-      // clears cart after last item is deleted
-      setProducts([]);
-  }, [cartProducts]);
-
-  useEffect(() => {
-
-  }, [cartProducts])
+  // useEffect(() => {
+  //   if (cartProducts.length > 0) {
+  //     // sends ids to server to get the info
+  //     axios.post('/api/cart', { ids: cartProducts }).then((response) => {
+  //       setProducts(response.data);
+  //       // console.log(response.data);
+  //     });
+  //   } else {
+  //     // clears cart after last item is deleted
+  //     setProducts([]);
+  //   }
+  // }, [cartProducts]);
 
   // Clears local storage cart after the purchase
   useEffect(() => {
