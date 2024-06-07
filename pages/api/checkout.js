@@ -1,6 +1,7 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import Order from "@/models/Order";
 import Product from "@/models/Product";
+import { mongooseConnectShared } from "@/shared/mongooseShared";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STIPE_SECRET_KEY)
@@ -13,6 +14,7 @@ export default async function checkoutHandler(req, res) {
   const { name, email, city, zipcode, streetAddress, country, cartProducts } = req.body;
 
   await mongooseConnect();
+  // await mongooseConnectShared();
  
   const productsIds = cartProducts;
   const uniqueIds = [...new Set(productsIds)]
@@ -45,7 +47,7 @@ export default async function checkoutHandler(req, res) {
     line_items, name, email, city, zipcode, streetAddress, country, paid:false,
   })
 
-  // console.log(orderDoc)
+  console.log(orderDoc)
   const session = await stripe.checkout.sessions.create({
     line_items,
     mode: 'payment',
@@ -55,6 +57,7 @@ export default async function checkoutHandler(req, res) {
     metadata: {orderId: orderDoc._id.toString(), test: 'ok'},
   });
 
+  console.log('this is session', session)
   
   res.json({
     url: session.url

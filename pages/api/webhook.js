@@ -11,8 +11,9 @@ import Order from "@/models/Order";
   cd to cli stripe folder
   open cmd prompt type stripe login
   confirm on the page by clicking on link in the cli window
-  change localhost if need it frontend is localhost:4000/api/webhook
-
+  run this command on the stripe cli stripe listen --forward-to localhost:4242/stripe_webhooks
+  change localhost if need it, the frontend is stripe listen --forward-to localhost:4000/api/webhook
+  ⚠️ if route is wrong it wont set it to paid in db! has to be this for test localhost:4000/api/webhook
 */
 
 const stripe = new Stripe(process.env.STIPE_SECRET_KEY)
@@ -26,7 +27,7 @@ export default async function webhookHandler(req, res) {
   let event;
   
   try { 
-    // console.log('try block')
+    console.log('try block')
     event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
     // console.log('event', event)
   } catch (err) {

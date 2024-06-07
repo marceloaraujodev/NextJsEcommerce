@@ -47,6 +47,7 @@ const OrderDetails = styled.div`
   gap: 50px;
   border-radius: 10px;
   margin-top: 80px;
+  margin-bottom: 40px;
   span {
     font-size: 1.3rem;
     font-weight: 600;
