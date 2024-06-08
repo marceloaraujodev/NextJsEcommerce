@@ -4,7 +4,7 @@ import Product from "@/models/Product";
 import { mongooseConnectShared } from "@/shared/mongooseShared";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export default async function checkoutHandler(req, res) {
   if (req.method !== 'POST') {

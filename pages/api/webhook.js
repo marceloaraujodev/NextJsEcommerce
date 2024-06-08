@@ -12,24 +12,27 @@ import Order from "@/models/Order";
   open cmd prompt type stripe login
   confirm on the page by clicking on link in the cli window
   run this command on the stripe cli stripe listen --forward-to localhost:4242/stripe_webhooks
-  change localhost if need it, the frontend is stripe listen --forward-to localhost:4000/api/webhook
+  change localhost if need it, the frontend is: stripe listen --forward-to localhost:4000/api/webhook
   ⚠️ if route is wrong it wont set it to paid in db! has to be this for test localhost:4000/api/webhook
 */
 
-const stripe = new Stripe(process.env.STIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT_SECRET
 
 export default async function webhookHandler(req, res) {
   await mongooseConnectShared();
   const sig = req.headers['stripe-signature'];
-  const rawBody = await buffer(req);
   
   let event;
   
   try { 
+    // const rawBody = await buffer(req);
+    const rawBody = (await buffer(req)).toString('utf8');
     console.log('try block')
+    console.log('this is signature', sig)
+    console.log('this is rawbody', rawBody)
     event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
-    // console.log('event', event)
+    console.log('event', event)
   } catch (err) {
     console.log('there was an error', err.message)
     res.status(400).send(`Webhook Error: ${err.message}`);
