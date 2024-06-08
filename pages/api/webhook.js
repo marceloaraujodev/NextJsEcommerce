@@ -16,8 +16,13 @@ import Order from "@/models/Order";
   ⚠️ if route is wrong it wont set it to paid in db! has to be this for test localhost:4000/api/webhook
 */
 
+export const config = {
+  api: {bodyParser: false}
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
-const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT_SECRET
+// The webook endpoint for production is different look at the webhook page under Signing secret ⚠️
+const endpointSecret = process.env.STRIPE_WEBHOOK_ENDPOINT_SECRET // production is different from dev. 
 
 export default async function webhookHandler(req, res) {
   await mongooseConnectShared();
@@ -27,10 +32,10 @@ export default async function webhookHandler(req, res) {
   
   try { 
     // const rawBody = await buffer(req);
-    const rawBody = (await buffer(req)).toString('utf8');
+    const rawBody = await buffer(req);
     // console.log('try block')
-    // console.log('this is signature', sig)
-    // console.log('this is rawbody', rawBody)
+    console.log('this is signature', sig)
+    console.log('this is rawbody', rawBody)
     event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
     console.log('event', event)
   } catch (err) {
@@ -44,7 +49,7 @@ export default async function webhookHandler(req, res) {
       const data = event.data.object;
       const orderId = data.metadata.orderId;
       const paid = data.payment_status === 'paid';
-      console.log('this should be Data and orderId', data)
+      // console.log('this should be Data and orderId', data)
       if(orderId && paid){
         await Order.findByIdAndUpdate(orderId, {paid: true})
       }
@@ -56,6 +61,3 @@ export default async function webhookHandler(req, res) {
   res.status(200).send('ok');
 }
 
-export const config = {
-  api: {bodyParser: false}
-}
