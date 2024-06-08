@@ -66,8 +66,6 @@ const SuccessTitle = styled.h1`
   font-size: 2.5;
 `;
 
-
-
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart, products} =
     useContext(CartContext);
@@ -82,21 +80,12 @@ export default function CartPage() {
   // console.log('preloadInfo:', preloadInfo)zz
 
   const router = useRouter();
-  // checks the url for success so it can clear cart
-  const {success} = router.query;
 
-  // useEffect(() => {
-  //   if (cartProducts.length > 0) {
-  //     // sends ids to server to get the info
-  //     axios.post('/api/cart', { ids: cartProducts }).then((response) => {
-  //       setProducts(response.data);
-  //       // console.log(response.data);
-  //     });
-  //   } else {
-  //     // clears cart after last item is deleted
-  //     setProducts([]);
-  //   }
-  // }, [cartProducts]);
+  // // testing cart success design
+  // const success = true
+
+  // // checks the url for success so it can clear cart
+  const {success} = router.query;
 
   // Clears local storage cart after the purchase
   useEffect(() => {
@@ -106,7 +95,7 @@ export default function CartPage() {
         localStorage.setItem('cart', [])
       }
     }
-  }, [success, clearCart])
+  }, [success]) // removed clearCart from dependencies infi loop
 
   function addOneMoreProduct(id) {
     addProduct(id);
@@ -125,7 +114,13 @@ export default function CartPage() {
 
   async function goToCheckout(){
     const response = await axios.post('/api/checkout', {
-      name, email, city, zipcode, streetAddress, country, cartProducts
+      name, 
+      email, 
+      city, 
+      zipcode, 
+      streetAddress, 
+      country, 
+      cartProducts
     });
     // if sessions is created successfully it redirects user to stripe checkout
     if(response.data.url){
@@ -136,11 +131,31 @@ export default function CartPage() {
     // router.push('http://localhost:3000/cart?success=1')
   }
 
-  if(success){
+  // if(success){
 
-    return (
-      <>
-        <Layout>
+  //   return (
+  //     <>
+  //       <Layout>
+  //       <Center>
+  //       <ColumnsWrapperSuccess>
+  //         <Box>
+  //           <SuccessTitle>Thanks for shopping with us.</SuccessTitle>
+  //           <p>We will email you as soon as your order is shipped!</p>
+  //         </Box>
+          
+  //       </ColumnsWrapperSuccess>
+  //       </Center>
+  //       </Layout>
+  //     </>
+  //   )
+  // }
+
+
+
+  return (
+    <>
+    {success ? (
+      <Layout>
         <Center>
         <ColumnsWrapperSuccess>
           <Box>
@@ -151,17 +166,12 @@ export default function CartPage() {
         </ColumnsWrapperSuccess>
         </Center>
         </Layout>
-      </>
-    )
-  }
-
-
-
-  return (
-    <>
+    ) : 
+    (
     <Layout>
       <Center>
         <ColumnsWrapper>
+        
           <Box>
             <h2>Cart</h2>
             {!cartProducts?.length && <div>You cart is empty</div>}
@@ -269,7 +279,10 @@ export default function CartPage() {
           )}
         </ColumnsWrapper>
       </Center>
-      </Layout>
+    </Layout>
+
+    )}
+
     </>
   );
 }

@@ -44,10 +44,19 @@ export default async function checkoutHandler(req, res) {
 
   // console.log(line_items)
   const orderDoc = await Order.create({
-    line_items, name, email, city, zipcode, streetAddress, country, paid:false,
+    line_items, 
+    name, 
+    email, 
+    city, 
+    zipcode, 
+    streetAddress, 
+    country, 
+    paid:false,
+    shipped: false
   })
 
-  console.log(orderDoc)
+  console.log('orderDoc:', orderDoc)
+  
   const session = await stripe.checkout.sessions.create({
     line_items,
     mode: 'payment',
@@ -60,7 +69,8 @@ export default async function checkoutHandler(req, res) {
   console.log('this is session', session)
   
   res.json({
-    url: session.url
+    url: session.url,
+    orderDoc
   })
 }
 

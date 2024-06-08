@@ -9,6 +9,10 @@ const OrderSchema = new mongoose.Schema({
   country: String,
   zipcode: String,
   paid: Boolean,
+  shipped: {
+    type: Boolean,
+    default: false
+  }
 }, { timestamps: true }
 );
 

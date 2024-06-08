@@ -119,6 +119,7 @@ export default function Account() {
                 </ImgBox>
 
                 <span>Apple watch</span>
+                {/* <span>{product.title}</span> */}
                 <ProductInfoBox>
                   <Button $black size="s">
                     Buy again
