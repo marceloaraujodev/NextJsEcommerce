@@ -28,9 +28,9 @@ export default async function webhookHandler(req, res) {
   try { 
     // const rawBody = await buffer(req);
     const rawBody = (await buffer(req)).toString('utf8');
-    console.log('try block')
-    console.log('this is signature', sig)
-    console.log('this is rawbody', rawBody)
+    // console.log('try block')
+    // console.log('this is signature', sig)
+    // console.log('this is rawbody', rawBody)
     event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
     console.log('event', event)
   } catch (err) {
